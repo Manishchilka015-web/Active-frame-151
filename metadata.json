@@ -1,0 +1,6 @@
+{
+  "name": "Active Frame Agency",
+  "description": "An influencer marketing agency landing page where brands can request campaign plans.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
