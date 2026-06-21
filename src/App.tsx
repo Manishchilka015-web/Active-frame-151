@@ -4,7 +4,7 @@
  */
 
 import React from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { HashRouter, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Services from './components/Services';
@@ -31,7 +31,7 @@ function Landing() {
 
 export default function App() {
   return (
-    <BrowserRouter>
+    <HashRouter>
       <div className="min-h-screen flex flex-col selection:bg-[#2DE2E2] selection:text-black">
         <Routes>
           <Route path="/" element={<Landing />} />
@@ -39,6 +39,6 @@ export default function App() {
           <Route path="/privacy" element={<Privacy />} />
         </Routes>
       </div>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
