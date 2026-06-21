@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { motion } from "motion/react";
 
 export default function ContactForm() {
@@ -9,13 +9,45 @@ export default function ContactForm() {
     e.preventDefault();
     
     setIsSubmitting(true);
-    // Simulate API call
-    setTimeout(() => {
-      setSubmitted(true);
+    
+    const formTarget = e.currentTarget;
+    const formData = new FormData(formTarget);
+    const data = {
+      name: formData.get('name'),
+      brandName: formData.get('brandName'),
+      contactNo: formData.get('contactNo'),
+      email: formData.get('email'),
+      website: formData.get('website'),
+      details: formData.get('details')
+    };
+
+    const webhookUrl = (import.meta as any).env.VITE_GOOGLE_SHEETS_WEBHOOK_URL;
+
+    if (!webhookUrl) {
+      alert("To instantly receive form submissions in your Google Sheet, please read the GOOGLE_SHEETS_SETUP.md file and add your VITE_GOOGLE_SHEETS_WEBHOOK_URL to your environment variables.");
       setIsSubmitting(false);
-      e.currentTarget.reset();
+      return;
+    }
+
+    try {
+      await fetch(webhookUrl, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: {
+          'Content-Type': 'text/plain;charset=utf-8',
+        },
+        body: JSON.stringify(data),
+      });
+
+      setSubmitted(true);
+      formTarget.reset();
       setTimeout(() => setSubmitted(false), 4000);
-    }, 1000);
+    } catch (error) {
+      console.error('Submission error:', error);
+      alert('Failed to submit the form.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
