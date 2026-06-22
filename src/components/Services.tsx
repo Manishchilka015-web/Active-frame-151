@@ -81,9 +81,12 @@ export default function Services() {
         </div>
 
         <div className="text-center">
-          <a href="#contact" className="bg-black hover:bg-gray-800 text-white px-8 py-4 md:px-10 md:py-5 rounded-full font-black uppercase tracking-widest text-sm md:text-base inline-block border-2 border-transparent hover:-translate-y-1 focus:outline-none transition-all">
+          <button 
+            onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })} 
+            className="bg-black hover:bg-gray-800 text-white px-8 py-4 md:px-10 md:py-5 rounded-full font-black uppercase tracking-widest text-sm md:text-base inline-block border-2 border-transparent hover:-translate-y-1 focus:outline-none transition-all"
+          >
             GET ACCESS TO 300+ INFLUENCERS FOR YOUR UPCOMING CAMPAIGN
-          </a>
+          </button>
         </div>
       </motion.div>
     </section>

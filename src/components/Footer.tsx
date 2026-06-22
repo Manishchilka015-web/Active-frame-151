@@ -1,7 +1,22 @@
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const handleNavClick = (e: React.MouseEvent<HTMLButtonElement>, targetId: string) => {
+    e.preventDefault();
+    if (location.pathname !== '/') {
+      navigate('/');
+      setTimeout(() => {
+        document.getElementById(targetId)?.scrollIntoView({ behavior: 'smooth' });
+      }, 100);
+    } else {
+      document.getElementById(targetId)?.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <footer className="bg-white border-t border-gray-200 px-6 py-12 md:px-12 w-full z-10 text-gray-700">
       <div className="max-w-7xl mx-auto flex flex-col gap-12">
@@ -12,13 +27,13 @@ export default function Footer() {
         </div>
 
         <div className="grid grid-cols-2 md:grid-cols-2 gap-8">
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-4 items-start">
             <h3 className="text-lg text-gray-400 mb-2">Help</h3>
-            <a href="/#faq" className="hover:text-black transition-colors text-lg">FAQ</a>
-            <a href="/#contact" className="hover:text-black transition-colors text-lg">Contact Us</a>
+            <button onClick={(e) => handleNavClick(e, 'faq')} className="hover:text-black transition-colors text-lg text-left">FAQ</button>
+            <button onClick={(e) => handleNavClick(e, 'contact')} className="hover:text-black transition-colors text-lg text-left">Contact Us</button>
           </div>
 
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-4 items-start">
             <h3 className="text-lg text-gray-400 mb-2">About</h3>
             <Link to="/terms" className="hover:text-black transition-colors text-lg">Terms & Conditions</Link>
             <Link to="/privacy" className="hover:text-black transition-colors text-lg">Privacy Policy</Link>

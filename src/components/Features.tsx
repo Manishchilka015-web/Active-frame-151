@@ -107,9 +107,12 @@ export default function Features() {
         </div>
 
         <div className="text-center mt-16">
-          <a href="#contact" className="bg-black hover:bg-gray-800 text-white px-8 py-4 md:px-10 md:py-5 rounded-full font-black uppercase tracking-widest text-sm md:text-base inline-block hover:-translate-y-1 focus:outline-none transition-all">
+          <button 
+            onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })} 
+            className="bg-black hover:bg-gray-800 text-white px-8 py-4 md:px-10 md:py-5 rounded-full font-black uppercase tracking-widest text-sm md:text-base inline-block hover:-translate-y-1 focus:outline-none transition-all"
+          >
             Talk to our marketing experts
-          </a>
+          </button>
         </div>
       </motion.div>
     </section>

@@ -1,9 +1,24 @@
 import { useState } from 'react';
 import { Menu, X } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const handleNavClick = (e: React.MouseEvent<HTMLButtonElement>, targetId: string) => {
+    e.preventDefault();
+    setIsMenuOpen(false);
+    if (location.pathname !== '/') {
+      navigate('/');
+      setTimeout(() => {
+        document.getElementById(targetId)?.scrollIntoView({ behavior: 'smooth' });
+      }, 100);
+    } else {
+      document.getElementById(targetId)?.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
 
   return (
     <>
@@ -29,8 +44,8 @@ export default function Navbar() {
         >
           {isMenuOpen ? <X className="w-6 h-6 text-black" /> : <Menu className="w-6 h-6 text-black" />}
         </button>
-        <div className="hidden md:flex gap-8 text-sm font-bold uppercase tracking-widest text-black">
-          <a href="/#contact" className="hover:text-[#FF3B5C] transition-colors">Contact Us</a>
+        <div className="hidden md:flex gap-8 text-sm items-center font-bold uppercase tracking-widest text-black">
+          <button onClick={(e) => handleNavClick(e, 'contact')} className="hover:text-[#FF3B5C] transition-colors uppercase tracking-widest">Contact Us</button>
           <Link to="/terms" className="hover:text-[#FF3B5C] transition-colors">Terms & Conditions</Link>
           <Link to="/privacy" className="hover:text-[#FF3B5C] transition-colors">Privacy Policy</Link>
         </div>
@@ -39,11 +54,11 @@ export default function Navbar() {
       {/* Mobile Menu */}
       {isMenuOpen && (
         <div className="fixed inset-0 top-[82px] bg-white z-40 border-b border-gray-200 md:hidden flex flex-col p-6 shadow-2xl">
-          <div className="flex flex-col gap-6 text-xl font-black uppercase tracking-widest text-black">
-            <a href="/#contact" onClick={() => setIsMenuOpen(false)} className="hover:text-[#FF3B5C] transition-colors pb-4 border-b border-gray-100">Contact Us</a>
-            <Link to="/terms" onClick={() => setIsMenuOpen(false)} className="hover:text-[#FF3B5C] transition-colors pb-4 border-b border-gray-100">Terms & Conditions</Link>
-            <Link to="/privacy" onClick={() => setIsMenuOpen(false)} className="hover:text-[#FF3B5C] transition-colors pb-4 border-b border-gray-100">Privacy Policy</Link>
-            <a href="/#faq" onClick={() => setIsMenuOpen(false)} className="hover:text-[#FF3B5C] transition-colors pb-4 border-b border-gray-100">FAQ</a>
+          <div className="flex flex-col items-start gap-6 text-xl font-black uppercase tracking-widest text-black">
+            <button onClick={(e) => handleNavClick(e, 'contact')} className="text-left w-full hover:text-[#FF3B5C] transition-colors pb-4 border-b border-gray-100 uppercase tracking-widest">Contact Us</button>
+            <Link to="/terms" onClick={() => setIsMenuOpen(false)} className="w-full hover:text-[#FF3B5C] transition-colors pb-4 border-b border-gray-100 block">Terms & Conditions</Link>
+            <Link to="/privacy" onClick={() => setIsMenuOpen(false)} className="w-full hover:text-[#FF3B5C] transition-colors pb-4 border-b border-gray-100 block">Privacy Policy</Link>
+            <button onClick={(e) => handleNavClick(e, 'faq')} className="text-left w-full hover:text-[#FF3B5C] transition-colors pb-4 border-b border-gray-100 uppercase tracking-widest">FAQ</button>
           </div>
         </div>
       )}
